@@ -18,16 +18,31 @@ public class MATRIKS {
 		this.NKolEff = 0;
 	}
 
-	public void BacaFileEksternal (String FileEksternal) {
-		//membaca file eksternal yang bernama FileEksternal
+	public void BacaInputUser (int row, int col){
+		//membaca matriks dari input user
+
+		Scanner in = new Scanner (System.in);
+
+		this.NBrsEff = row;
+		this.NKolEff = col;
+
+		for (int i = 0; i<this.NBrsEff ; i++){
+			for (int j = 0; j<this.NKolEff; j++){
+				this.Tab[i][j] = in.nextDouble();
+			}	
+		} 
+	}
+
+	public void BacaFileEksternal (String filename) {
+		//membaca matriks dari file eksternal
 
 		try {
-			File file = new File (FileEksternal);
+			File file = new File (filename);
 			Scanner sc = new Scanner(file); 
 
 			if (sc.hasNextLine()){
 				String s = sc.nextLine();
-				s.trim();
+				s = s.trim();
 				int c=0;
 
 				for (int i=0; i<s.length();i++){
@@ -64,4 +79,34 @@ public class MATRIKS {
 			e.printStackTrace();
 		}
 	}
+
+	public void CetakMATRIKS (){
+		//mencetak matriks
+		
+		for (int i = 0; i<this.NBrsEff; i++){
+			for (int j = 0; j<this.NKolEff ; j++){
+				System.out.print (this.Tab[i][j] + " ");
+			}
+			System.out.println();	
+		} 
+	}
+
+	public void TulisFileEksternal (String filename)  {
+		//menulis MATRIKS ke file eksternal
+        try {
+            FileWriter writer = new FileWriter(filename);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+ 			
+	        for (int i = 0; i<this.NBrsEff; i++){
+				for (int j = 0; j<this.NKolEff; j++){
+					bufferedWriter.write(this.Tab[i][j] + " ");
+				}
+				bufferedWriter.newLine();	
+			} 
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
 }
