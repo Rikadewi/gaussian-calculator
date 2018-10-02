@@ -4,42 +4,22 @@ import java.util.*;
 public class driver {
 
 	public static void main(String[] args) {
-		//buat objek
-		MATRIKS M = new MATRIKS();
-		//input data dari user
+		
+
+		MATRIKS M = new MATRIKS(); 
 
 		Scanner in = new Scanner (System.in);
 
-		int row = in.nextInt();
-		int col = in.nextInt();
+		//baca inputan interpolasi
 
-		M.BacaInputUser(row, col);
+		int n = in.nextInt();
+		M.BacaInputUser(n, 2); 
 		
+		//melakukan interpolasi
+		interpolasi.SolusiInterpolasi (M);
 		
-		//Melakukan Gauss
-		Gaussian.Gauss(M);
-		Gaussian.backSub(M);
-		Gaussian.printSol(Gaussian.solution);
-		//cetak matriks
-		
-		M.CetakMATRIKS ();
-
-		//input data dari file eksternal
-		Scanner inn = new Scanner (System.in);
-
-		String filename = inn.nextLine(); 
-		M.BacaFileEksternal(filename);
-		M.CetakMATRIKS ();
-		
-		
-		
-		//tulis data ke file eksternal
-		Scanner innn = new Scanner (System.in);
-
-		filename = innn.nextLine(); 
-		M.TulisFileEksternal(filename);
-		
-		
+		//mencetak solusi interpolasi
+		Gaussian.printSol(Gaussian.solution);	
 		
 	}
 	
