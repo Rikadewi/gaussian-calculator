@@ -10,23 +10,14 @@ public class interpolasi {
 		MATRIKS M1 = new MATRIKS();
 		
 		M1.NBrsEff = M.NBrsEff;
-		M1.NKolEff = 4;
+		M1.NKolEff = M.NBrsEff+1;
 
 		for (int i=0;i<M1.NBrsEff; i++){
-			for (int j=0;j<M1.NKolEff; j++){
-				if (j==0){
-					M1.Tab[i][j]=1;
-				} 
-				if (j==1){
-					M1.Tab[i][j]=M.Tab[i][0];
-				} 
-				if (j==2){
-					M1.Tab[i][j]=M.Tab[i][0]*M.Tab[i][0];
-				} 
-				if (j==3){
-					M1.Tab[i][j]=M.Tab[i][1];
-				}
+			int j;
+			for (j=0;j<M1.NKolEff-1; j++){
+				M1.Tab[i][j]=Math.pow(M.Tab[i][0],j);
 			}
+			M1.Tab[i][j] = M.Tab[i][1];
 		}
 
 		//Melakukan Gauss
@@ -37,7 +28,7 @@ public class interpolasi {
 	
 	public static void printPol(double solution [])
 	{	
-		System.out.printf("p(x) = ");
+		System.out.printf("p%d(x) = ", solution.length-1);
 		for(int i = 0;i<solution.length;i++)
 		{
 			if (solution[i]<0){
@@ -49,11 +40,11 @@ public class interpolasi {
 				System.out.printf("%.3f",solution[i]);
 			}
 
-			if (i==1){
+			if (i!=0){
 				System.out.printf("x");
 			}
-			if (i==2){
-				System.out.printf("x^2");
+			if (i>1){
+				System.out.printf("^%d", i);
 			}
 			
 		}
@@ -61,7 +52,13 @@ public class interpolasi {
 	}
 
 	public static double solusiInterpolasi (double x, double solution []){
-		return solution[0] + solution[1] * x + solution[2] * x * x;
+		double hsl = 0;
+
+		for(int i = 0;i<solution.length;i++)
+		{
+			hsl += Math.pow (x, i)*solution[i];
+		}
+		return hsl;
 	}
 
 	public static void TulisInter (String filename, double solution [], double x, double y)  {
@@ -70,7 +67,7 @@ public class interpolasi {
             FileWriter writer = new FileWriter(filename);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
  			
-            bufferedWriter.write("p(x) = ");
+            bufferedWriter.write("p" + (solution.length-1) + "(x) = ");
 
             for(int i = 0;i<solution.length;i++)
 			{
@@ -80,21 +77,21 @@ public class interpolasi {
 					if (i!=0){
 						bufferedWriter.write(" + ");
 					}
-					bufferedWriter.write(""+solution[i]);
+					bufferedWriter.write("" + solution[i]);
 				}
 
-				if (i==1){
+				if (i!=0){
 					bufferedWriter.write("x");
 				}
-				if (i==2){
-					bufferedWriter.write("x^2");
+				if (i>1){
+					bufferedWriter.write("^" + i);
 				}
 				
 			}
 
 	        bufferedWriter.newLine();
 
-	        bufferedWriter.write("p(" + x + ")= " + y );
+	        bufferedWriter.write("p" + (solution.length-1) +"(" + x + ")= " + y );
 	        bufferedWriter.newLine();
 
             bufferedWriter.close();
