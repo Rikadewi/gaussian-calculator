@@ -123,7 +123,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	      }
 	    }
 	    for (int l=0;l<M.NBrsEff;l++) {
-	    JordanSolution[l] = M.Tab[l][M.NKolEff];
+	    JordanSolution[l] = M.Tab[l][M.NKolEff-1];
 	    }
 	  }
 	
