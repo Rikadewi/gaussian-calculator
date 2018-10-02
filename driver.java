@@ -25,19 +25,19 @@ public class driver {
 		M.CetakMATRIKS ();
 
 		//input data dari file eksternal
-		Scanner inn = new Scanner (System.in);
+		// Scanner inn = new Scanner (System.in);
 
-		String filename = inn.nextLine(); 
-		M.BacaFileEksternal(filename);
-		M.CetakMATRIKS ();
+		// String filename = inn.nextLine(); 
+		// M.BacaFileEksternal(filename);
+		// M.CetakMATRIKS ();
 		
 		
 		
 		//tulis data ke file eksternal
 		Scanner innn = new Scanner (System.in);
-
+		String filename = innn.nextLine(); 
 		filename = innn.nextLine(); 
-		M.TulisFileEksternal(filename);
+		M.TulisSPL(filename,Gaussian.solution);
 		
 		
 		
