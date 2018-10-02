@@ -50,8 +50,8 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 				isZero = true;		
 				while(isZero && RowX<M.NBrsEff)
 				{
-					isZero = (M.Tab[RowX][i] == 0);
 					RowX++;
+					isZero = (M.Tab[RowX][i] == 0);
 					
 				}
 				//Ketemu baris yang dapat di-swap
@@ -87,8 +87,60 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 				}
 			}
 			
+		
 			
-			//STEP 2 : MEMBUAT LEADING ELEMENT MENJADI 1
+			//STEP 2 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT MENJADI 0 DENGAN OBE
+			
+			for(int row = i+1;row<M.NBrsEff;row++){
+				if(M.Tab[i][ColX]!=0) {
+					ratio = M.Tab[row][i]/M.Tab[i][i];		//ratio untuk pengali
+					for(int col = ColX;col<M.NKolEff;col++){
+						M.Tab[row][col] -= ratio*(M.Tab[i][col]);
+					}
+				}
+			}
+			
+			
+
+		    //Step 3 : Menukar baris untuk mengurutkan 0
+		    for ( int i1 = 1; i1 < M.NBrsEff; i1++) {
+		      //Mencari jumlah nol di baris ke-i
+		      int zeroi,j;
+		      zeroi = 0; j = 1;
+		      while (j < M.NKolEff && M.Tab[i1][j] == 0) {
+		        zeroi++;
+		        j++;
+		      }
+		      //Mencari jumlah nol di baris setelah baris ke-i
+		      int rowSw,zeroRowSw;
+		      rowSw = -1; zeroRowSw = zeroi;
+		      for ( int k = i1+1; k <= M.NBrsEff; k++) {
+		        int zerok,l;
+		        zerok = 0; l = 1;
+		        while (l < M.NKolEff && M.Tab[k][l] == 0) {
+		          zerok++;
+		          l++;
+		        }
+		        if (zerok<zeroRowSw){
+		          rowSw = k;
+		          zeroRowSw = zerok;
+		        }
+		      }
+		      //Menukar 2 baris
+		      if (rowSw != -1) {
+		        double temp1;
+		        for ( int m = 1; m <= M.NKolEff; m++) {
+		          temp1 =M.Tab[i1][m];
+		          M.Tab[i1][m] = M.Tab[rowSw][m];
+		          M.Tab[rowSw][m] = temp1;
+		        }
+		      }
+		    }
+			
+			
+			
+			
+			//STEP 4 : MEMBUAT LEADING ELEMENT MENJADI 1
 			
 			LeadingE = M.Tab[i][ColX];			// Menyimpan Leading Element non zero ke variabel Leading E
 			
@@ -97,19 +149,8 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 					M.Tab[i][col] = M.Tab[i][col]/LeadingE;
 				}
 			}
-
 			
-			//STEP 3 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT MENJADI 0 DENGAN OBE
 			
-			for(int row = i+1;row<M.NBrsEff;row++)
-			{
-				if(M.Tab[i][ColX]!=0) {
-					ratio = M.Tab[row][ColX]/M.Tab[i][ColX];		//ratio untuk pengali
-					for(int col = ColX;col<M.NKolEff;col++){
-						M.Tab[row][col] -= ratio*(M.Tab[i][col]);
-					}
-				}
-			}
 		}	
 	}
 	public static void RREF(MATRIKS M) {
