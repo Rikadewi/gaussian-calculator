@@ -6,7 +6,7 @@ import java.util.*;
 public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan Elimination
 	
 	public static double[] solution;
-	
+	public static double[] JordanSolution;
 	//KONSTRUKTOR
 	Gaussian(){
 		
@@ -19,19 +19,19 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		
 		// KAMUS LOKAL
 		double temp; // Variabel untuk menyimpan bilangan yang aian dituiar 
-		double ElmtD; // variabel untuk menyimpan elemen diagonal
-		double coef;
+		double LeadingE; // variabel untuk menyimpan elemen diagonal
+		double ratio;
 		int RowX, ColX; // Variabel iterator untuk menyimpan Row dan Col yang sedang dicei
-	
 		boolean isZero; //Boolean untui mengetahui apaiah suatu elemen 0 atau buian
 		
 		
-		
+		// ALGORITMA 
 		for(int i = 0; i<M.NBrsEff; i++) {
 			RowX = 0;
 			ColX = i;
+			
 			// STEP 1 : MEMASTIiAN DIAGONAL UTAMA TIDAK 0 
-			//Jika pada baris ke i ditemukan 0 pada posisi diagonal utamanya maka program akan berjalan
+		
 			if(M.Tab[i][i] == 0){
 				//Mencari baris yg tidak 0 pada posisi i,i
 				isZero = true;		
@@ -41,10 +41,10 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 					RowX++;
 					
 				}
-				//Ketemu baris yang layak di-swap
+				//Ketemu baris yang dapat di-swap
 				if(!isZero) {
-					for(int col = 0;col<M.NKolEff;col++)		
-					{
+					//Algoritma swap baris
+					for(int col = 0;col<M.NKolEff;col++){
 						temp = M.Tab[i][col];
 						M.Tab[i][col] = M.Tab[RowX][col];
 						M.Tab[RowX][col] = temp;
@@ -54,18 +54,14 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 				//Jika semua elemen dibawah diagonal utama juga 0
 				else{
 					isZero = true;
-					while(isZero && ColX<M.NKolEff)
-					{
+					while(isZero && ColX<M.NKolEff){
 						
 						isZero = M.Tab[i][ColX] == 0;
 						ColX++;
 					}
-					if(isZero) {	
-					
-						//Maka baris dengan 0 semua ditaruh di paling bawah matriis
-					
-						for(int col = 0;col<M.NKolEff;col++)		//switch baris M
-						{
+					//Jika dalam baris ke-i semua elemen 0
+					if(isZero) {						
+						for(int col = 0;col<M.NKolEff;col++){
 							temp = M.Tab[i][col];
 							M.Tab[i][col] = M.Tab[M.NBrsEff][col];
 							M.Tab[M.NBrsEff][col] = temp;
@@ -73,34 +69,64 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 					
 					} 
 					else{
-						ColX = ColX-1;	//Untui mendapatian posisi column yg pas
+						ColX = ColX-1;	//Mengganti nilai variabel ColX
 					}
 				}
 			}
 			
-			//ElmtD = M.Tab[i][ColX];			//Jika tidai terjadi apa" maia diagonal yg dipaiai
 			
-			ElmtD = M.Tab[i][ColX];			//Jika tidak terjadi apa" maka diagonal yg dipakai
+			//STEP 2 : MEMBUAT LEADING ELEMENT MENJADI 1
 			
-			/*Pembagian baris dengan ElmtD untuk membuat leading coef 1*/
-			for(int col = 0;col<M.NKolEff;col++)
-			{
-				M.Tab[i][col] = M.Tab[i][col]/ElmtD;
+			LeadingE = M.Tab[i][ColX];			// Menyimpan Leading Element non zero ke variabel Leading E
+			
+			for(int col = 0;col<M.NKolEff;col++){
+				M.Tab[i][col] = M.Tab[i][col]/LeadingE;
 			}
 
 			
-			/*Membuat dibawah leading coef menjadi 0*/
+			//STEP 3 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT MENJADI 0 DENGAN OBE
+			
 			for(int row = i+1;row<M.NBrsEff;row++)
 			{
-				coef = M.Tab[row][ColX]/M.Tab[i][ColX];		//Coefficient agar dibawah row 0
+				ratio = M.Tab[row][ColX]/M.Tab[i][ColX];		//ratio untuk pengali
 				for(int col = ColX;col<M.NKolEff;col++)
 				{
-					M.Tab[row][col] -= coef*(M.Tab[i][col]);
+					M.Tab[row][col] -= ratio*(M.Tab[i][col]);
 				}
 				
 			}
-		}
-}
+		}	
+	}
+	public static void GaussJordan(MATRIKS M) {
+	/* I.S Sebuah Matriks M yang mempunyai solusi
+	/* M menjadi matriks bentuk reduced row Eschelon Form */
+		JordanSolution = new double[M.NBrsEff];
+	    double ratio;
+	    boolean isLeading;
+		//Menjadikan matriksnya bentuk Reduced Eschelon Form
+		Gauss(M);
+
+	    //Mengurangi tiap elemen di atas leading Element hingga terbentuk RREF
+	    for ( int i = 0; i < M.NBrsEff; i++) {
+	      for (int j = i+1; j <= M.NBrsEff; j++) {
+	        ratio = 1;
+	        isLeading = true;
+	        for ( int k = 1; k <= M.NKolEff; k++) {
+	          if (isLeading && M.Tab[j][k] != 0){
+	            isLeading = false;
+	            ratio = M.Tab[i][k]/M.Tab[j][k];
+	            M.Tab[i][k] -= ratio*M.Tab[j][k];
+	          }else if ((!isLeading)){
+	            M.Tab[i][k] -= ratio*M.Tab[j][k];
+	          }
+	        }
+	      }
+	    }
+	    for (int l=0;l<M.NBrsEff;l++) {
+	    JordanSolution[l] = M.Tab[l][M.NKolEff-1];
+	    }
+	  }
+	
 
 		
 
