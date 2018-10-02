@@ -10,14 +10,14 @@ public class MATRIKS {
 	//Method
 
 	//KONSTRUKTOR
-
-	MATRIKS(){
+ 
+	public MATRIKS(){
 		//menghasilkan matriks kosong
 
 		this.NBrsEff = 0;
 		this.NKolEff = 0;
 	}
-
+ 
 	public void BacaInputUser (int row, int col){
 		//membaca matriks dari input user
 
@@ -110,6 +110,24 @@ public class MATRIKS {
  
     }
 	
+	public void TulisSPL (String filename, double solution [])  {
+		//menulis MATRIKS ke file eksternal
+        try {
+            FileWriter writer = new FileWriter(filename);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+ 			
+ 			for(int i = 1;i<=solution.length;i++)
+			{
+				bufferedWriter.write("x"+ i +" = "+solution[i-1]);
+				bufferedWriter.newLine();
+			}	
+	        
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
 	
 	
 	
