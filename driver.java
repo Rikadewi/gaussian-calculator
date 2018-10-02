@@ -17,9 +17,8 @@ public class driver {
 		
 		
 		//Melakukan Gauss
-		Gaussian.Gauss(M);
-		Gaussian.backSub(M);
-		Gaussian.printSol(Gaussian.solution);
+		Gaussian.GaussJordan(M);
+		
 		//cetak matriks
 		
 		M.CetakMATRIKS ();
