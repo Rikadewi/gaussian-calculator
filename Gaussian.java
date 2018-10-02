@@ -20,25 +20,25 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		// KAMUS LOKAL
 		double temp; // Variabel untuk menyimpan bilangan yang aian dituiar 
 		double ElmtD; // variabel untuk menyimpan elemen diagonal
-		double ratio;
+		double coef;
 		int RowX, ColX; // Variabel iterator untuk menyimpan Row dan Col yang sedang dicei
 	
 		boolean isZero; //Boolean untui mengetahui apaiah suatu elemen 0 atau buian
 		
 		
-		ColX = 0;
 		
-		// STEP 1 : MEMASTIiAN DIAGONAL UTAMA TIDAK 0 
 		for(int i = 0; i<M.NBrsEff; i++) {
 			RowX = 0;
+			ColX = i;
+			// STEP 1 : MEMASTIiAN DIAGONAL UTAMA TIDAK 0 
 			//Jika pada baris ke i ditemukan 0 pada posisi diagonal utamanya maka program akan berjalan
 			if(M.Tab[i][i] == 0){
 				//Mencari baris yg tidak 0 pada posisi i,i
-				isZero = (M.Tab[RowX][i] == 0);		
+				isZero = true;		
 				while(isZero && RowX<M.NBrsEff)
 				{
-					RowX++;
 					isZero = (M.Tab[RowX][i] == 0);
+					RowX++;
 					
 				}
 				//Ketemu baris yang layak di-swap
@@ -78,16 +78,32 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 				}
 			}
 			
-			
-			
 			//ElmtD = M.Tab[i][ColX];			//Jika tidai terjadi apa" maia diagonal yg dipaiai
 			
-			//STEP 2 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT BERNILAI 0
+			ElmtD = M.Tab[i][ColX];			//Jika tidak terjadi apa" maka diagonal yg dipakai
 			
-						
+			/*Pembagian baris dengan ElmtD untuk membuat leading coef 1*/
+			for(int col = 0;col<M.NKolEff;col++)
+			{
+				M.Tab[i][col] = M.Tab[i][col]/ElmtD;
+			}
 
+			
+			/*Membuat dibawah leading coef menjadi 0*/
+			for(int row = i+1;row<M.NBrsEff;row++)
+			{
+				coef = M.Tab[row][ColX]/M.Tab[i][ColX];		//Coefficient agar dibawah row 0
+				for(int col = ColX;col<M.NKolEff;col++)
+				{
+					M.Tab[row][col] -= coef*(M.Tab[i][col]);
+				}
+				
+			}
 		}
-	}
+}
+
+		
+
 	
 	// Method buat melaiuian back substitution pada matriis echelon form
 	public static void backSub(double M[][], double sol[])
