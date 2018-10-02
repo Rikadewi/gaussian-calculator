@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan Elimination
 	
-	public static double solution[];
+	public static double[] solution;
 	
 	//KONSTRUKTOR
 	Gaussian(){
@@ -106,18 +106,34 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 
 	
 	// Method buat melaiuian back substitution pada matriis echelon form
-	public static void backSub(double M[][], double sol[])
+	public static void backSub(MATRIKS M)
 	{
-		solution = new double[M.length];
+		solution = new double[M.NBrsEff];
+		double[][] coefM = new double[M.NBrsEff][M.NKolEff-1];
+		double[] solM = new double[M.NBrsEff];
+		
+		//Mengisi matriks koefisien
+		for (int i = 0; i< M.NBrsEff; i++) {
+			for (int j=0; j< M.NKolEff-1; j++) {
+				coefM[i][j] = M.Tab[i][j];
+			}
+		}
+		
+		//Mengisi matriks solusi
+		for (int k =0; k<M.NBrsEff;k++) {
+			solM[k] = M.Tab[k][M.NKolEff-1];
+		}
+		
+		
 		double sum;
-		for(int i = M.length-1;i>=0;i--)
+		for(int i = (M.NBrsEff)-1;i>=0;i--)
 		{
 			sum = 0.0;
-			for(int j = i +1;j<M.length;j++)
+			for(int j = i +1;j<coefM.length;j++)
 			{
-				sum += M[i][j] * solution[j];
+				sum += coefM[i][j] * solution[j];
 			}
-			solution[i] = (sol[i] - sum)/M[i][i];
+			solution[i] = (solM[i] - sum)/coefM[i][i];
 		}
 	}
 	
@@ -126,7 +142,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		System.out.println("Solusi dari SPL:");
 		for(int i = 0;i<solution.length;i++)
 		{
-			System.out.printf("x%d = %.3f\n",i,solution[i]);
+			System.out.printf("x%d = %.3f\n",i+1,solution[i]);
 		}
 	}
 

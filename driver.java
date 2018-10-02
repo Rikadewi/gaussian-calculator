@@ -18,6 +18,8 @@ public class driver {
 		
 		//Melakukan Gauss
 		Gaussian.Gauss(M);
+		Gaussian.backSub(M);
+		Gaussian.printSol(Gaussian.solution);
 		//cetak matriks
 		
 		M.CetakMATRIKS ();
