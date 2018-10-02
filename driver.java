@@ -15,9 +15,13 @@ public class driver {
 
 		M.BacaInputUser(row, col);
 		
+		System.out.println("Hasil Gauss");
+		Gaussian.REF(M);
+		M.CetakMATRIKS();
+		System.out.println("Hasil Gauss Jordan");
 		
 		//Melakukan Gauss
-		Gaussian.GaussJordan(M);
+		Gaussian.RREF(M);
 		Gaussian.printSol(Gaussian.JordanSolution);
 		//cetak matriks
 		

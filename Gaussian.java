@@ -12,8 +12,21 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		
 	}
 	
+	/*
+	public static int CekSolution(M) {
+		// I.S M adalah Matriks REF
+		// F.S Sebuah integer yang menyatakan jenis solusi dengan ketentuan berikut :
+		// 1. Jika Banyak Solusi (Parametrik) akan mengembalikan -1
+		// 2. Jika Tidak ada Solusi akan mengembalikan 0
+		// 3. Jika Satu Solusi akan mengembalikan 1
 	
-	public static void Gauss(MATRIKS M) {
+	
+	
+	
+	}*/
+	
+	
+	public static void REF(MATRIKS M) {
 	/* I.S Sebuah Matriis M yang berupa matriis koefisien dari Unknown dan array Sol yang merupaian matriks berisi solusi dari persamaan, apabila keduanya digabungkan akan menjadi matriks augmented
 	/* M menjadi matriis bentui reduced Eschelon Form */
 		
@@ -79,8 +92,10 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 			
 			LeadingE = M.Tab[i][ColX];			// Menyimpan Leading Element non zero ke variabel Leading E
 			
-			for(int col = 0;col<M.NKolEff;col++){
-				M.Tab[i][col] = M.Tab[i][col]/LeadingE;
+			if(LeadingE != 0) {
+				for(int col = 0;col<M.NKolEff;col++){
+					M.Tab[i][col] = M.Tab[i][col]/LeadingE;
+				}
 			}
 
 			
@@ -88,23 +103,23 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 			
 			for(int row = i+1;row<M.NBrsEff;row++)
 			{
-				ratio = M.Tab[row][ColX]/M.Tab[i][ColX];		//ratio untuk pengali
-				for(int col = ColX;col<M.NKolEff;col++)
-				{
-					M.Tab[row][col] -= ratio*(M.Tab[i][col]);
+				if(M.Tab[i][ColX]!=0) {
+					ratio = M.Tab[row][ColX]/M.Tab[i][ColX];		//ratio untuk pengali
+					for(int col = ColX;col<M.NKolEff;col++){
+						M.Tab[row][col] -= ratio*(M.Tab[i][col]);
+					}
 				}
-				
 			}
 		}	
 	}
-	public static void GaussJordan(MATRIKS M) {
+	public static void RREF(MATRIKS M) {
 	/* I.S Sebuah Matriks M yang mempunyai solusi
 	/* M menjadi matriks bentuk reduced row Eschelon Form */
 		JordanSolution = new double[M.NBrsEff];
 	    double ratio;
 	    boolean isLeading;
 		//Menjadikan matriksnya bentuk Reduced Eschelon Form
-		Gauss(M);
+		REF(M);
 
 	    //Mengurangi tiap elemen di atas leading Element hingga terbentuk RREF
 	    for ( int i = 0; i < M.NBrsEff; i++) {
@@ -127,8 +142,6 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	    }
 	  }
 	
-
-		
 
 	
 	// Method buat melaiuian back substitution pada matriis echelon form
