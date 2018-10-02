@@ -79,25 +79,95 @@ public class MainProgram
 					{
 						backutama=true;
 					}
-					/*else if(metode== 1)
+					else if(metode== 1)
 					{
-						Beri pilihan file eksternal atau langsung dari keyboard (gunakan class buatan rika)
-						Tunggu Garda, Gauss
+						System.out.println("Anda telah memilih Eliminasi Gauss, silakan pilih metode yang diinginkan: ");
+						System.out.println("1. Masukkan input dari keyboard ");
+						System.out.println("2. Masukkan input dari file eksternal ");
+						System.out.println("3. Back ke menu utama");
+						System.out.println();
+
+
+						do
+						{
+							//Scanner in = new Scanner(System.in); 
+							Scanner in = new Scanner(System.in); 
+							System.out.print("Pilih metode: ");
+							metode = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+							if((metode != 1) && (metode != 2) && (metode != 3))
+							{
+								System.out.println("Metode salah, silakan coba lagi !");
+							}
+						}
+						while((metode != 1) && (metode != 2) && (metode != 3));
+
+						if(metode == 3) //command untuk back ke program utama
+						{
+							backutama=true;
+						}
+							
+						/*else if(metode== 1)
+						{
+							langsung dari keyboard (gunakan class buatan rika)
+							Tunggu Garda, Gauss
+						}
+						*/
+						/*else if(metode== 2)
+						{
+							file eksternal (gunakan class buatan rika)
+							Tunggu Garda, Gauss Jorsn
+						}
+						*/
 					}
-					*/
-					/*else if(metode== 2)
+					
+					else if(metode== 2)
 					{
-						Beri pilihan file eksternal atau langsung dari keyboard (gunakan class buatan rika)
-						Tunggu Garda, Gauss Jorsn
+						System.out.println("Anda telah memilih Eliminasi Gauss Jordan, silakan pilih metode yang diinginkan: ");
+						System.out.println("1. Masukkan input dari keyboard ");
+						System.out.println("2. Masukkan input dari file eksternal ");
+						System.out.println("3. Back ke menu utama");
+						System.out.println();
+
+
+						do
+						{
+							//Scanner in = new Scanner(System.in); 
+							Scanner in = new Scanner(System.in); 
+							System.out.print("Pilih metode: ");
+							metode = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+							if((metode != 1) && (metode != 2) && (metode != 3))
+							{
+								System.out.println("Metode salah, silakan coba lagi !");
+							}
+						}
+						while((metode != 1) && (metode != 2) && (metode != 3));
+
+						if(metode == 3) //command untuk back ke program utama
+						{
+							backutama=true;
+						}
+							
+						/*else if(metode== 1)
+						{
+							langsung dari keyboard (gunakan class buatan rika)
+							Tunggu Garda, Gauss
+						}
+						*/
+						/*else if(metode== 2)
+						{
+							file eksternal (gunakan class buatan rika)
+							Tunggu Garda, Gauss Jorsn
+						}
+						*/
 					}
-					*/
+					
 				}
 
-				else if(menu == 2)//user memilih menu Interpolasi Polinom
+				else if(menu == 2)//user memilih menu Interpolasi Polinom, menggunakan Gauss atau Gauss Jordan
 				{
 					System.out.println("Anda telah memilih menu Interpolasi Polinom, silakan pilih metode yang diinginkan: ");
-					System.out.println("1. Metode eliminasi Gauss ");
-					System.out.println("2. Metode eliminasi Gauss Jordan ");
+					System.out.println("1. Masukkan input dari keyboard ");
+					System.out.println("2. Masukkan input dari file eksternal ");
 					System.out.println("3. Back ke menu utama");
 					System.out.println();
 
@@ -121,13 +191,13 @@ public class MainProgram
 					}
 					/*else if(metode== 1)
 					{
-						Beri pilihan file eksternal atau langsung dari keyboard (gunakan class buatan rika)
+						langsung dari keyboard (gunakan class buatan rika)
 						Tunggu Garda, Gauss
 					}
 					*/
 					/*else if(metode== 2)
 					{
-						Beri pilihan file eksternal atau langsung dari keyboard (gunakan class buatan rika)
+						file eksternal (gunakan class buatan rika)
 						Tunggu Garda, Gauss Jorsn
 					}
 					*/
