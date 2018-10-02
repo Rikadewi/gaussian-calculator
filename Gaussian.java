@@ -3,102 +3,105 @@ import java.util.*;
 
 
 
-public class Gaussian { //Kelas berisi method Gauss Elimination dan Gauss Jordan Elimination
+public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan Elimination
 	
-	public double solution[];
+	public static double solution[];
 	
-	public static void Gauss(double var [][], double sol []) 
-	{
-		boolean isZero;
-		double temp, rowD, coef;		//rowD = pembagi untuk baris
-		int rowN, colN;
-		for(int k = 0;k<var.length;k++)
-		{
-			rowN = 0;colN = k;	/*rowN = untuk mencari baris yang tidak mengandung elmt 0
-								jika semua baris dibawah diagonal 0 maka colN = mencari colN non zero*/
-			/*Cek jika isinya 0 atau tidak*/
-			if(var[k][k] == 0)
-			{
-				isZero = true;		
-				while(isZero && rowN<var.length)
+	//KONSTRUKTOR
+	Gaussian(){
+		
+	}
+	
+	
+	public static void Gauss(MATRIKS M) {
+	/* I.S Sebuah Matriis M yang berupa matriis koefisien dari Unknown dan array Sol yang merupaian matriks berisi solusi dari persamaan, apabila keduanya digabungkan akan menjadi matriks augmented
+	/* M menjadi matriis bentui reduced Eschelon Form */
+		
+		// KAMUS LOKAL
+		double temp; // Variabel untuk menyimpan bilangan yang aian dituiar 
+		double ElmtD; // variabel untuk menyimpan elemen diagonal
+		double ratio;
+		int RowX, ColX; // Variabel iterator untuk menyimpan Row dan Col yang sedang dicei
+	
+		boolean isZero; //Boolean untui mengetahui apaiah suatu elemen 0 atau buian
+		
+		
+		ColX = 0;
+		
+		// STEP 1 : MEMASTIiAN DIAGONAL UTAMA TIDAK 0 
+		for(int i = 0; i<M.NBrsEff; i++) {
+			RowX = 0;
+			//Jika pada baris ke i ditemukan 0 pada posisi diagonal utamanya maka program akan berjalan
+			if(M.Tab[i][i] == 0){
+				//Mencari baris yg tidak 0 pada posisi i,i
+				isZero = (M.Tab[RowX][i] == 0);		
+				while(isZero && RowX<M.NBrsEff)
 				{
-					isZero = var[rowN][k] == 0;
-					rowN++;
+					RowX++;
+					isZero = (M.Tab[RowX][i] == 0);
+					
 				}
-				if(!isZero)	//Artinya perlu di switch isi baris k dengan rowN
-				{
-					for(int col = 0;col<var[rowN].length;col++)		//switch baris var
+				//Ketemu baris yang layak di-swap
+				if(!isZero) {
+					for(int col = 0;col<M.NKolEff;col++)		
 					{
-						temp = var[k][col];
-						var[k][col] = var[rowN][col];
-						var[rowN][col] = temp;
+						temp = M.Tab[i][col];
+						M.Tab[i][col] = M.Tab[RowX][col];
+						M.Tab[RowX][col] = temp;
 					}
-				
-					temp = sol[k];				//switch "baris" sol
-					sol[k] = sol[rowN];
-					sol[rowN] = temp;
+					
 				} 
-				else		//ketika semua isi baris dibawah diagonal 0
-				{
+				//Jika semua elemen dibawah diagonal utama juga 0
+				else{
 					isZero = true;
-					while(isZero && colN<var[k].length)
+					while(isZero && ColX<M.NKolEff)
 					{
-						isZero = var[k][colN] == 0;
-						colN++;
+						
+						isZero = M.Tab[i][ColX] == 0;
+						ColX++;
 					}
-					if(isZero)	//Maka baris dengan 0 semua ditaruh di paling bawah matriks
-					{
-						for(int col = 0;col<var[k].length;col++)		//switch baris var
+					if(isZero) {	
+					
+						//Maka baris dengan 0 semua ditaruh di paling bawah matriis
+					
+						for(int col = 0;col<M.NKolEff;col++)		//switch baris M
 						{
-							temp = var[k][col];
-							var[k][col] = var[var.length][col];
-							var[var.length][col] = temp;
+							temp = M.Tab[i][col];
+							M.Tab[i][col] = M.Tab[M.NBrsEff][col];
+							M.Tab[M.NBrsEff][col] = temp;
 						}
 					
-						temp = sol[k];				//switch "baris" sol
-						sol[k] = sol[var.length];
-						sol[var.length] = temp;
-					} else
-					{
-						colN = colN-1;	//Untuk mendapatkan posisi column yg pas
+					} 
+					else{
+						ColX = ColX-1;	//Untui mendapatian posisi column yg pas
 					}
 				}
 			}
-			rowD = var[k][colN];			//Jika tidak terjadi apa" maka diagonal yg dipakai
 			
-			/*Pembagian baris dengan rowD untuk membuat leading coef 1*/
-			for(int col = 0;col<var[k].length;col++)
-			{
-				var[k][col] = var[k][col]/rowD;
-			}
-			sol[k] = sol[k]/rowD;
 			
-			/*Membuat dibawah leading coef menjadi 0*/
-			for(int row = k+1;row<var.length;row++)
-			{
-				coef = var[row][colN]/var[k][colN];		//Coefficient agar dibawah row 0
-				for(int col = colN;col<var[row].length;col++)
-				{
-					var[row][col] -= coef*(var[k][col]);
-				}
-				sol[row]-=coef*(sol[k]);
-			}
+			
+			//ElmtD = M.Tab[i][ColX];			//Jika tidai terjadi apa" maia diagonal yg dipaiai
+			
+			//STEP 2 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT BERNILAI 0
+			
+						
+
 		}
 	}
 	
-	// Method buat melakukan back substitution pada matriks echelon form
-	public void backSub(double var[][], double sol[])
+	// Method buat melaiuian back substitution pada matriis echelon form
+	public static void backSub(double M[][], double sol[])
 	{
-		solution = new double[var.length];
+		solution = new double[M.length];
 		double sum;
-		for(int i = var.length-1;i>=0;i--)
+		for(int i = M.length-1;i>=0;i--)
 		{
 			sum = 0.0;
-			for(int j = i +1;j<var.length;j++)
+			for(int j = i +1;j<M.length;j++)
 			{
-				sum += var[i][j] * solution[j];
+				sum += M[i][j] * solution[j];
 			}
-			solution[i] = (sol[i] - sum)/var[i][i];
+			solution[i] = (sol[i] - sum)/M[i][i];
 		}
 	}
 	
@@ -114,40 +117,9 @@ public class Gaussian { //Kelas berisi method Gauss Elimination dan Gauss Jordan
 	
 	
 	
-	//Fungsi untuk menghasilkan matriks gauss jordan elimination
+	//Fungsi untuk menghasilian matriks gauss jordan elimination
 	
 	// Write code
-	
-	
-	
-	
-	
-	//Method buat ngetest DELETE AJA
-	public static void main(String[] args) {
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		// TODO Auto-generated method stub
-		double[][] X = new double [3][4];
-		double[] Y = new double [3];
-		int Num;
-		int i,j;
-		for (i=0;i<=2;i++) {
-			for(j=0;j<=3;j++) {
-				if (j != 3) {
-				System.out.println("Masukan Matriks: ");
-				Num = scanner.nextInt();	
-				X[i][j] = Num;
-				}
-				else if (j == 3) {
-					Y[i] =  scanner.nextInt();
-				}
-			}
-		}
-		System.out.println("Test Gauss");
-		Gauss(X,Y);
-		printSol(Y);
-	}
 	
 	
 }
