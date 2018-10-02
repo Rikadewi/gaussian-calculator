@@ -13,7 +13,7 @@ public class driverinter {
 		//baca inputan interpolasi
 
 		int n = in.nextInt();
-		M.BacaInputUser(n, 2); 
+		M.BacaInputUser(n+1, 2); 
 		
 		//melakukan interpolasi
 		interpolasi.MatriksInterpolasi (M);
@@ -22,7 +22,14 @@ public class driverinter {
 		interpolasi.printPol(Gaussian.solution);	
 		
 		double x  = in.nextDouble();
-		System.out.printf("p(%.3f) = %.3f\n", x, interpolasi.solusiInterpolasi ( x, Gaussian.solution));
+		double y = interpolasi.solusiInterpolasi ( x, Gaussian.solution);
+		System.out.printf("p(%.3f) = %.3f\n", x, y);
+
+		//mencetak ke file eksternal
+		Scanner inn = new Scanner (System.in);
+
+		String filename = inn.nextLine();
+		interpolasi.TulisInter (filename, Gaussian.solution, x, y);
 	}
 	
 
