@@ -6,7 +6,7 @@ import java.util.*;
 public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan Elimination
 	
 	public static double[] solution;
-	
+	public static double[] JordanSolution;
 	//KONSTRUKTOR
 	Gaussian(){
 		
@@ -100,7 +100,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	public static void GaussJordan(MATRIKS M) {
 	/* I.S Sebuah Matriks M yang mempunyai solusi
 	/* M menjadi matriks bentuk reduced row Eschelon Form */
-
+		JordanSolution = new double[M.NBrsEff];
 	    double ratio;
 	    boolean isLeading;
 		//Menjadikan matriksnya bentuk Reduced Eschelon Form
@@ -121,6 +121,9 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	          }
 	        }
 	      }
+	    }
+	    for (int l=0;l<M.NBrsEff;l++) {
+	    JordanSolution[l] = M.Tab[l][M.NKolEff];
 	    }
 	  }
 	
