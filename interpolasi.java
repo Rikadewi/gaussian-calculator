@@ -30,7 +30,7 @@ public class interpolasi {
 		}
 
 		//Melakukan Gauss
-		Gaussian.Gauss(M1);
+		Gaussian.REF(M1);
 		Gaussian.backSub(M1);
 		
 	}
@@ -64,4 +64,43 @@ public class interpolasi {
 		return solution[0] + solution[1] * x + solution[2] * x * x;
 	}
 
+	public static void TulisInter (String filename, double solution [], double x, double y)  {
+		//menulis MATRIKS ke file eksternal
+        try {
+            FileWriter writer = new FileWriter(filename);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+ 			
+            bufferedWriter.write("p(x) = ");
+
+            for(int i = 0;i<solution.length;i++)
+			{
+				if (solution[i]<0){
+					bufferedWriter.write(" - " + (-1*solution[i]));
+				}else{
+					if (i!=0){
+						bufferedWriter.write(" + ");
+					}
+					bufferedWriter.write(""+solution[i]);
+				}
+
+				if (i==1){
+					bufferedWriter.write("x");
+				}
+				if (i==2){
+					bufferedWriter.write("x^2");
+				}
+				
+			}
+
+	        bufferedWriter.newLine();
+
+	        bufferedWriter.write("p(" + x + ")= " + y );
+	        bufferedWriter.newLine();
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
 }
