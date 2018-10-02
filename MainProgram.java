@@ -6,8 +6,11 @@ public class MainProgram
 	{
 	/*Atribut*/
 	boolean exit, backutama;
-	int menu,metode;
-
+	int menu,metode,simpan;
+	int n,m; // n = banyak peubah (banyak kolom), m= banyak persamaan (baris)
+	String filename; // variable untuk menulis namafile dalam string.
+	int nderajat; // derajat polinom
+	double x,y;
 
 	/*ALgoritma*/
 	exit = false;
@@ -64,7 +67,6 @@ public class MainProgram
 
 					do
 					{
-						//Scanner in = new Scanner(System.in); 
 						Scanner in = new Scanner(System.in); 
 						System.out.print("Pilih metode: ");
 						metode = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
@@ -79,7 +81,7 @@ public class MainProgram
 					{
 						backutama=true;
 					}
-					else if(metode== 1)
+					else if(metode== 1)//input dimasukkan dari keyboard
 					{
 						System.out.println("Anda telah memilih Eliminasi Gauss, silakan pilih metode yang diinginkan: ");
 						System.out.println("1. Masukkan input dari keyboard ");
@@ -90,7 +92,7 @@ public class MainProgram
 
 						do
 						{
-							//Scanner in = new Scanner(System.in); 
+							
 							Scanner in = new Scanner(System.in); 
 							System.out.print("Pilih metode: ");
 							metode = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
@@ -106,21 +108,106 @@ public class MainProgram
 							backutama=true;
 						}
 							
-						/*else if(metode== 1)
+						else if(metode== 1) //memilih masukkan input dari keyboard
 						{
-							langsung dari keyboard (gunakan class buatan rika)
-							Tunggu Garda, Gauss
+							MATRIKS M = new MATRIKS();
+							Scanner in = new Scanner(System.in);
+							System.out.print("Masukkan banyak persamaan / baris matriks: ");
+							m = in.nextInt();
+							System.out.print("Masukkan banyak peubah / kolom matriks: ");
+							n = in.nextInt();
+							M.BacaInputUser(m,n);
+
+							Gaussian  G = new Gaussian();
+							G.REF(M); // melakukan fungsi gauss
+							System.out.println("Matriks setelah dilakukan Gauss:");
+							M.CetakMATRIKS();
+							G.backSub(M); // melakukan back substitution							
+							G.printSol(G.solution); //print solusi ke layar
+
+							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
+							
+							do
+							{
+								
+								Scanner filein = new Scanner(System.in); 
+								System.out.print("Simpan? ");
+								simpan = filein.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+								if((simpan != 1) && (simpan != 0))
+								{
+									System.out.println("Simpan salah, silakan coba lagi !");
+								}
+							}
+							while((simpan != 1) && (simpan != 0));
+
+							if(simpan==1)
+							{
+								Scanner filein = new Scanner (System.in);
+								System.out.print("Masukkan nama file penyimpanan (.txt): ");
+								filename = filein.nextLine(); 
+								M.TulisSPL(filename,Gaussian.solution);
+								backutama = true;
+							}
+							else //simpan == 0
+							{
+								backutama=true;
+							}
+						
 						}
-						*/
-						/*else if(metode== 2)
+						
+						else if(metode== 2) //memilih masukkan  dari file eksternal
 						{
-							file eksternal (gunakan class buatan rika)
-							Tunggu Garda, Gauss Jorsn
+							MATRIKS M = new MATRIKS();
+							Scanner in = new Scanner(System.in);
+							System.out.print("Masukkan nama file eksternal (.txt): ");
+							filename = in.nextLine();
+							M.BacaFileEksternal(filename);
+							System.out.println("Matriks Anda sekarang: ");
+							M.CetakMATRIKS();
+							System.out.println();
+
+
+							Gaussian  G = new Gaussian();
+							G.REF(M); // melakukan fungsi gauss
+							System.out.println("Matriks setelah dilakukan Gauss:");
+							M.CetakMATRIKS();
+							G.backSub(M); // melakukan back substitution							
+							G.printSol(G.solution); //print solusi ke layar
+							System.out.println();
+
+							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
+							
+							do
+							{
+								
+								Scanner filein = new Scanner(System.in); 
+								System.out.print("Simpan? ");
+								simpan = filein.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+								if((simpan != 1) && (simpan != 0))
+								{
+									System.out.println("Simpan salah, silakan coba lagi !");
+								}
+							}
+							while((simpan != 1) && (simpan != 0));
+
+							if(simpan==1)
+							{
+								Scanner filein = new Scanner (System.in);
+								System.out.print("Masukkan nama file penyimpanan (.txt): ");
+								filename = filein.nextLine(); 
+								M.TulisSPL(filename,Gaussian.solution);
+								backutama = true;
+							}
+							else //simpan == 0
+							{
+								backutama=true;
+							}
+							
 						}
-						*/
+						
 					}
 					
-					else if(metode== 2)
+					else if(metode== 2) // Memilih Eliminasi REF Jordan
 					{
 						System.out.println("Anda telah memilih Eliminasi Gauss Jordan, silakan pilih metode yang diinginkan: ");
 						System.out.println("1. Masukkan input dari keyboard ");
@@ -147,23 +234,105 @@ public class MainProgram
 							backutama=true;
 						}
 							
-						/*else if(metode== 1)
+						else if(metode== 1)
 						{
-							langsung dari keyboard (gunakan class buatan rika)
-							Tunggu Garda, Gauss
+							MATRIKS M = new MATRIKS();
+							Scanner in = new Scanner(System.in);
+							System.out.print("Masukkan banyak persamaan / baris matriks: ");
+							m = in.nextInt();
+							System.out.print("Masukkan banyak peubah / kolom matriks: ");
+							n = in.nextInt();
+							M.BacaInputUser(m,n);
+
+							Gaussian  G = new Gaussian();
+							G.RREF(M); // melakukan fungsi gauss
+							System.out.println("Matriks setelah dilakukan REF:");
+							M.CetakMATRIKS();							
+							G.printSol(G.JordanSolution); //print solusi ke layar
+
+							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
+							
+							do
+							{
+								
+								Scanner filein2 = new Scanner(System.in); 
+								System.out.print("Simpan? ");
+								simpan = filein2.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+								if((simpan != 1) && (simpan != 0))
+								{
+									System.out.println("Simpan salah, silakan coba lagi !");
+								}
+							}
+							while((simpan != 1) && (simpan != 0));
+
+							if(simpan==1)
+							{
+								Scanner filein2 = new Scanner (System.in);
+								System.out.print("Masukkan nama file penyimpanan (.txt): ");
+								filename = filein2.nextLine(); 
+								M.TulisSPL(filename,Gaussian.solution);
+								backutama = true; // kembali ke menu utama
+							}
+							else //simpan == 0
+							{
+								backutama=true;  //kembali ke menu utama
+							}
+						
 						}
-						*/
-						/*else if(metode== 2)
+						
+						else if(metode== 2) //memilih masukkan  dari file eksternal
 						{
-							file eksternal (gunakan class buatan rika)
-							Tunggu Garda, Gauss Jorsn
+							MATRIKS M = new MATRIKS();
+							Scanner in = new Scanner(System.in);
+							System.out.print("Masukkan nama file eksternal (.txt): ");
+							filename = in.nextLine();
+							M.BacaFileEksternal(filename);
+							System.out.println("Matriks Anda sekarang: ");
+							M.CetakMATRIKS();
+							System.out.println();
+
+
+							Gaussian  G = new Gaussian();
+							G.RREF(M); // melakukan fungsi gauss
+							System.out.println("Matriks setelah dilakukan Gauss Jordan:");
+							M.CetakMATRIKS();
+							G.printSol(G.JordanSolution); //print solusi ke layar
+							System.out.println();
+
+							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
+							
+							do
+							{
+								
+								Scanner filein2 = new Scanner(System.in); 
+								System.out.print("Simpan? ");
+								simpan = filein2.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+								if((simpan != 1) && (simpan != 0))
+								{
+									System.out.println("Simpan salah, silakan coba lagi !");
+								}
+							}
+							while((simpan != 1) && (simpan != 0));
+
+							if(simpan==1)
+							{
+								Scanner filein = new Scanner (System.in);
+								System.out.print("Masukkan nama file penyimpanan (.txt): ");
+								filename = filein.nextLine(); 
+								M.TulisSPL(filename,Gaussian.solution);
+								backutama = true;
+							}
+							else //simpan == 0
+							{
+								backutama=true;
+							}
+							
 						}
-						*/
 					}
 					
 				}
 
-				else if(menu == 2)//user memilih menu Interpolasi Polinom, menggunakan Gauss atau Gauss Jordan
+				else if(menu == 2)//user memilih menu Interpolasi Polinom, menggunakan REF atau REF Jordan
 				{
 					System.out.println("Anda telah memilih menu Interpolasi Polinom, silakan pilih metode yang diinginkan: ");
 					System.out.println("1. Masukkan input dari keyboard ");
@@ -174,7 +343,7 @@ public class MainProgram
 
 					do
 					{
-						//Scanner in = new Scanner(System.in); 
+						
 						Scanner in = new Scanner(System.in); 
 						System.out.print("Pilih metode: ");
 						metode = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
@@ -189,18 +358,114 @@ public class MainProgram
 					{
 						backutama=true;
 					}
-					/*else if(metode== 1)
+					else if(metode== 1) //Memasukkan input dari keyboard
 					{
-						langsung dari keyboard (gunakan class buatan rika)
-						Tunggu Garda, Gauss
+						MATRIKS M = new MATRIKS();
+						interpolasi I = new interpolasi();
+						Gaussian G = new Gaussian();
+
+						Scanner in = new Scanner (System.in);
+						System.out.print("Masukkan derajat polinom interpolasi (n): ");
+						nderajat = in.nextInt();
+
+						M.BacaInputUser(nderajat+1,2);
+						I.MatriksInterpolasi (M);
+						System.out.println("Hasil interpolasi: ");
+						I.printPol(G.solution);
+
+						System.out.print("Masukkan harga x: ");
+						x= in.nextDouble();
+						y= I.solusiInterpolasi(x, G.solution);
+						System.out.println("Taksiran nilai fungsi: ");
+						System.out.printf("p(%.3f) = %.3f\n\n", x, y);
+
+						System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
+							
+							do
+							{
+								
+								Scanner filein2 = new Scanner(System.in); 
+								System.out.print("Simpan? ");
+								simpan = filein2.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+								if((simpan != 1) && (simpan != 0))
+								{
+									System.out.println("Simpan salah, silakan coba lagi !");
+								}
+							}
+							while((simpan != 1) && (simpan != 0));
+
+							if(simpan==1)
+							{
+								Scanner filein = new Scanner (System.in);
+								System.out.print("Masukkan nama file penyimpanan (.txt): ");
+								filename = filein.nextLine(); 
+								I.TulisInter(filename,Gaussian.solution,x,y);
+								backutama = true;
+							}
+							else //simpan == 0
+							{
+								backutama=true;
+							}
+
+
+
 					}
-					*/
-					/*else if(metode== 2)
+					
+					else if(metode== 2) //Memasukkan input dari file eksternal
 					{
-						file eksternal (gunakan class buatan rika)
-						Tunggu Garda, Gauss Jorsn
+						MATRIKS M = new MATRIKS();
+						interpolasi I = new interpolasi();
+						Gaussian G = new Gaussian();
+
+						Scanner in = new Scanner(System.in);
+						System.out.print("Masukkan nama file eksternal (.txt): ");
+						filename = in.nextLine();
+						M.BacaFileEksternal(filename);
+						System.out.println("Matriks interpolasi Anda sekarang: ");
+						M.CetakMATRIKS();
+						System.out.println();
+
+						I.MatriksInterpolasi (M);
+						System.out.println("Hasil interpolasi: ");
+						I.printPol(G.solution);
+
+						System.out.print("Masukkan harga x: ");
+						x= in.nextDouble();
+						y= I.solusiInterpolasi(x, G.solution);
+						System.out.println("Taksiran nilai fungsi: ");
+						System.out.printf("p(%.3f) = %.3f\n\n", x, y);
+
+						System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
+							
+							do
+							{
+								
+								Scanner filein2 = new Scanner(System.in); 
+								System.out.print("Simpan? ");
+								simpan = filein2.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+								if((simpan != 1) && (simpan != 0))
+								{
+									System.out.println("Simpan salah, silakan coba lagi !");
+								}
+							}
+							while((simpan != 1) && (simpan != 0));
+
+							if(simpan==1)
+							{
+								Scanner filein = new Scanner (System.in);
+								System.out.print("Masukkan nama file penyimpanan (.txt): ");
+								filename = filein.nextLine(); 
+								I.TulisInter(filename,Gaussian.solution,x,y);
+								backutama = true;
+							}
+							else //simpan == 0
+							{
+								backutama=true;
+							}
+
+
+
 					}
-					*/
 				}
 			}	
 		}
