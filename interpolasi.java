@@ -61,8 +61,8 @@ public class interpolasi {
 		return hsl;
 	}
 
-	public static void TulisInter (String filename, double solution [], double x, double y)  {
-		//menulis MATRIKS ke file eksternal
+	public static void TulisPol (String filename, double solution [])  {
+		//menulis polinom ke file eksternal
         try {
             FileWriter writer = new FileWriter(filename);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
@@ -71,27 +71,25 @@ public class interpolasi {
 
             for(int i = 0;i<solution.length;i++)
 			{
-				if (solution[i]<0){
-					bufferedWriter.write(" - " + (-1*solution[i]));
-				}else{
-					if (i!=0){
-						bufferedWriter.write(" + ");
+				if (solution[i]!=0){
+					if (solution[i]<0){
+						bufferedWriter.write(" - " + (-1*solution[i]));
+					}else{
+						if (i!=0){
+							bufferedWriter.write(" + ");
+						}
+						bufferedWriter.write("" + solution[i]);
 					}
-					bufferedWriter.write("" + solution[i]);
-				}
 
-				if (i!=0){
-					bufferedWriter.write("x");
+					if (i!=0){
+						bufferedWriter.write("x");
+					}
+					if (i>1){
+						bufferedWriter.write("^" + i);
+					}
 				}
-				if (i>1){
-					bufferedWriter.write("^" + i);
-				}
-				
 			}
 
-	        bufferedWriter.newLine();
-
-	        bufferedWriter.write("p" + (solution.length-1) +"(" + x + ")= " + y );
 	        bufferedWriter.newLine();
 
             bufferedWriter.close();
@@ -100,4 +98,21 @@ public class interpolasi {
         }
  
     }
+
+    public static void TulisPx (String filename, int derajat, double x, double y)  {
+		//menulis perkiraan nilai y ke file eksternal
+        try {
+            FileWriter writer = new FileWriter(filename, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+	        bufferedWriter.write("p" + derajat +"(" + x + ")= " + y );
+	        bufferedWriter.newLine();
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
+
 }
