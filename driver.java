@@ -7,22 +7,31 @@ public class driver {
 		//buat objek
 		MATRIKS M = new MATRIKS();
 		//input data dari user
-
+		
+		//bikin array
+	
+		
 		Scanner in = new Scanner (System.in);
 
 		int row = in.nextInt();
 		int col = in.nextInt();
-
+		
+		System.out.println("Silahkan memasuki elemen");
 		M.BacaInputUser(row, col);
 		
+		//Menguji Gauss
 		System.out.println("Hasil Gauss");
 		Gaussian.REF(M);
 		M.CetakMATRIKS();
+		Gaussian.printSol(M);
+		
+		//Menguji Gauss Jordan
 		System.out.println("Hasil Gauss Jordan");
 		
-		//Melakukan Gauss
+	
 		Gaussian.RREF(M);
-		Gaussian.printSol(Gaussian.JordanSolution);
+		Gaussian.printSol(M);
+		
 		//cetak matriks
 		
 		M.CetakMATRIKS ();
