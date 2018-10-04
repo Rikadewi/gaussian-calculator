@@ -4,28 +4,28 @@ import java.util.*;
 
 
 public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan Elimination
-	
+
 	public static double[] solution;
 	public static double[] JordanSolution;
 	//KONSTRUKTOR
 	Gaussian(){}
-		
-	
+
+
 	public static void REF(MATRIKS M) {
 	/* I.S Sebuah Matriis M yang berupa matriis koefisien dari Unknown dan array Sol yang merupaian matriks berisi solusi dari persamaan, apabila keduanya digabungkan akan menjadi matriks augmented
 	/* M menjadi matriis bentui reduced Eschelon Form */
-		
+
 		// KAMUS LOKAL
 		double ratio;
 		double temp;
 		 // Variabel iterator untuk menyimpan Row dan Col yang sedang dicei
 		//Boolean untui mengetahui apaiah suatu elemen 0 atau buian
 		int i,j,k,l;
-		
-		// ALGORITMA 
-		for(i = 0; i<M.NBrsEff; i++) {	
-			
-			//STEP 1 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT MENJADI 0 
+
+		// ALGORITMA
+		for(i = 0; i<M.NBrsEff; i++) {
+
+			//STEP 1 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT MENJADI 0
 			for(int row = i+1;row<M.NBrsEff;row++){
 				if(M.Tab[i][IndexLeading(i,M)]!=0) {
 					ratio = M.Tab[row][IndexLeading(i,M)]/M.Tab[i][IndexLeading(i,M)];		//ratio untuk pengali
@@ -34,8 +34,8 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 					}
 				}
 			}
-			
-			
+
+
 
 		    //STEP 2 : MENGURUTKAN 0 SEHINGGA MEMBENTUK MATRIKS SEGITIGA BAWAH/ESCHELON
 		    for ( k = 0; k < M.NBrsEff-1; k++) {
@@ -63,7 +63,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		      }
 		      //Menukar 2 baris
 		      if (RowToSwitch != -1) {
-		       
+
 		        for ( int m = 0; m < M.NKolEff; m++) {
 		          temp =M.Tab[k][m];
 		          M.Tab[k][m] = M.Tab[RowToSwitch][m];
@@ -71,14 +71,14 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		        }
 		      }
 		    }
-			
-			
-			
-			
+
+
+
+
 			//STEP 3 : MEMBUAT LEADING ELEMENT MENJADI 1
-			
+
 		    boolean LeadingE;
-		    
+
 		    for ( k = 0; k < M.NBrsEff; k++) {
 		      ratio = 1;
 		      LeadingE = true;
@@ -92,11 +92,11 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		        }
 		      }
 		    }
-			
-		}	
+
+		}
 	}
 	public static void RREF(MATRIKS M) {
-	/* I.S Sebuah Matriks M yang mempunyai solusi
+	/* I.S Sebuah Matriks M yang berbentuk REF
 	/* M menjadi matriks bentuk reduced row Eschelon Form */
 	    double ratio;
 	    boolean isLeading;
@@ -119,9 +119,11 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	      }
 	    }
 	  }
-	
+
 	// Fungsi untuk mememeriksa apakah suatu baris pada matriks Koefisien mengandung 0 semua
 	public static boolean isCoefZero(int i, MATRIKS M){
+	//I.S Sebuah Matriks M yang berbentuk REF/RREF dan index i yang menunjukan baris yang ingin dicek
+	//F.S Boolean yang bernilai TRUE jika seluruh koefisien baris ke-i 0
 	    int j = 0;
 	    boolean found = false;
 	    while (j<M.NKolEff-1 && !(found)) {
@@ -136,12 +138,16 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 
 	  //Memeriksa apakah elemen hasil baris ke-i adalah nol
 	  public static boolean IsResultZero(int i, MATRIKS M){
+		//I.S : Matriks M berbentuk REF/RREF
+		//F.S Bernilai True jika pada kolom terakhir terdapat nilai 0
 	    return (M.Tab[i][M.NKolEff-1] == 0);
 	  }
-	  
-	  
-	  
+
+
+
 	  public static boolean SingleLeading(int i, MATRIKS M){
+		//I.S : Matriks M berbentuk REF/RREF
+		//F.S : Bernilai TRUE jika pada baris ke-i matriks M hanya terdapat satu leading Element
 	    boolean retLeadingOne, leadingOneFound;
 	    retLeadingOne = true;
 	    leadingOneFound = false;
@@ -158,31 +164,34 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	  }
 
 	  public static int IndexLeading(int i, MATRIKS M){
-	    //Prekondisi : Baris ke-i memiliki leading 1
+	  //I.S Baris ke-i Matriks M dicek, Matriks M berbentuk REF/RREF
+		//F.S Integer yang menunjukan posisi dari Leading Element baris ke-i
 	    boolean leadingFound;
 	    int j;
 	    j = 0;
 	    leadingFound = false;
 	    while (!leadingFound && j<M.NKolEff-1) {
-	      //Mencari leading one
+	      //Mencari leading Element
 	      if (!leadingFound && M.Tab[i][j] !=     0){
 	        leadingFound = true;
 	      }else{
 	        j++;
 	      }
 	    }
-	    //Mengembalikan posisi leading 1
+			//Mengembalikan posisi leading Element
 	    return j;
 	  }
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 	public static boolean isSolvable(MATRIKS M){
+	//I.S Matriks M yang berbentuk REF/RREF
+	//F.S Bernilai TRUE jika matriks M mempunyai solusi
 	    int i = 0;
 	    boolean retSol = true;
 	    while (retSol && i<M.NBrsEff) {
@@ -196,7 +205,8 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	  }
 
 	  public static String[] Solver(MATRIKS M){
-	    //Prekondisi : MATRIKS Solvable
+	  // I.S MATRIKS M berbentuk REF/RREF dan mempunyai solusi
+		// F.S Sebuah Array of String yang berisi solusi dari persamaan yang direpresentasikan Matriks M
 	    String[] resultArray = new String[M.NKolEff-1]; //Check
 	    for (int i=0; i<M.NKolEff-1; i++) {
 	      resultArray[i] = Character.toString((char) (i + 96));
@@ -232,6 +242,8 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	  }
 
 	  private static String ConCoefParam(double coef, String param){
+		//I.S Coef dan param terdefinisi
+		// F.S Sebuah string yang berisi gabungan dari parmeter dan soluso
 	    if (param.length()>1){
 	      param = "("+param+")";
 	    }
@@ -245,7 +257,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	      return Double.toString(coef) + param;
 	    }
 	  }
-		
+
 	public static double[] ArrStringtoDouble (String[] S) {
 		//I.S Tidak boleh solusi Parametrik!
 		//F.S Sebuah array solusi yang berisi integer
@@ -255,10 +267,12 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 			}
 			return newArray;
 	}
-	
+
 	// Method buat ngeprint solusi
-		
+
 	public static void printSol(MATRIKS M){
+	//I.S Matriks M terdefinisi (belum tentu Solvable)
+	//F.S Menuliskan ke layar solusi dari SPL
 		String[] result = new String[0];
 		if (Gaussian.isSolvable(M)) {
 			result = Gaussian.Solver(M);
@@ -266,19 +280,19 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 				 System.out.println("x"+(i+1)+":"+result[i]);
 			}
 		}
-		
+
 		else {
 			System.out.println("No Solution");
 		}
-		
+
 	}
 
-	
-	
-	
+
+
+
 	//Fungsi untuk menghasilian matriks gauss jordan elimination
-	
+
 	// Write code
-	
-	
+
+
 }
