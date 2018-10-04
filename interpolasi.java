@@ -22,7 +22,6 @@ public class interpolasi {
 
 		//Melakukan Gauss
 		Gaussian.REF(M1);
-		Gaussian.backSub(M1);
 		
 	}
 	
@@ -51,12 +50,13 @@ public class interpolasi {
 		System.out.printf("\n");
 	}
 
-	public static double solusiInterpolasi (double x, double solution []){
+	public static double solusiInterpolasi (double x, String solution []){
 		double hsl = 0;
-
+		double StrToInt;
 		for(int i = 0;i<solution.length;i++)
 		{
-			hsl += Math.pow (x, i)*solution[i];
+			StrToInt = Double.valueOf(solution[i]);
+			hsl += Math.pow (x, i)*StrToInt;
 		}
 		return hsl;
 	}
