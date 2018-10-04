@@ -139,6 +139,8 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	    return (M.Tab[i][M.NKolEff-1] == 0);
 	  }
 	  
+	  
+	  
 	  public static boolean SingleLeading(int i, MATRIKS M){
 	    boolean retLeadingOne, leadingOneFound;
 	    retLeadingOne = true;
@@ -183,8 +185,8 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	public static boolean isSolvable(MATRIKS M){
 	    int i = 0;
 	    boolean retSol = true;
-	    while (retSol && i<M.NBrsEff-1) {
-	      if (isCoefZero(i,M) && !IsResultZero(i,M)) {
+	    while (retSol && i<M.NBrsEff) {
+	      if ((isCoefZero(i,M)) && (!IsResultZero(i,M))) {
 	        retSol = false;
 	      }else{
 	        i++;
