@@ -18,6 +18,7 @@ public class driver {
 		
 		System.out.println("Silahkan memasuki elemen");
 		M.BacaInputUser(row, col);
+
 		
 		//Menguji Gauss
 		System.out.println("Hasil Gauss");
@@ -26,8 +27,7 @@ public class driver {
 		Gaussian.printSol(M);
 		
 		//Menguji Gauss Jordan
-		System.out.println("Hasil Gauss Jordan");
-		
+		System.out.println("Hasil Gauss Jordan");		
 	
 		Gaussian.RREF(M);
 		Gaussian.printSol(M);
