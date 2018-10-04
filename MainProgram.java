@@ -389,7 +389,7 @@ public class MainProgram
 						x[i]  = doublein.nextDouble();
 						while (x[i]!=-999) {
 							
-							y[i] = I.solusiInterpolasi ( x[i], G.solution);
+							//y[i] = I.solusiInterpolasi ( x[i], G.solution);
 							System.out.println("Taksiran nilai fungsi: ");
 							System.out.printf("p%d(%.3f) = %.3f\n\n",nderajat, x[i], y[i]);
 							System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
@@ -469,7 +469,7 @@ public class MainProgram
 						x[i]  = doublein.nextDouble();
 						while (x[i]!=-999) {
 							
-							y[i] = I.solusiInterpolasi ( x[i], G.solution);
+							//y[i] = I.solusiInterpolasi ( x[i], G.solution);
 							
 							System.out.println("Taksiran nilai fungsi: ");
 							System.out.printf("p%d(%.3f) = %.3f\n\n",(G.solution.length-1), x[i], y[i]);
