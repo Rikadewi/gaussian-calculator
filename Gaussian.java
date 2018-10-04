@@ -246,7 +246,15 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 	    }
 	  }
 		
-	
+	public static double[] ArrStringtoDouble (String[] S) {
+		//I.S Tidak boleh solusi Parametrik!
+		//F.S Sebuah array solusi yang berisi integer
+			double[] newArray = new double[S.length];
+			for (int i=0; i<S.length; i++) {
+		      newArray[i]= Double.valueOf(S[i]);
+			}
+			return newArray;
+	}
 	
 	// Method buat ngeprint solusi
 		
