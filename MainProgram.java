@@ -10,17 +10,15 @@ public class MainProgram
 	int n,m; // n = banyak peubah (banyak kolom), m= banyak persamaan (baris)
 	String filename; // variable untuk menulis namafile dalam string.
 	int nderajat; // derajat polinom
-	//double x,y;
 
 	/*ALgoritma*/
-	exit = false;
+	exit = false; //Jika True, maka keluar dari program
 	while(!exit)
 		{	
-			backutama = false;
+			backutama = false; // jika true, maka keluar menuju menu utama
 			while(!backutama)
 			{
-				System.out.println("===================================================");
-			
+				System.out.println("===================================================");			
 				System.out.println("Tugas Besar Aljabar Geometri SPL dan Aplikasinya");	
 				System.out.println("Credit : Kelompok 'Ga Luka'");	
 				System.out.println("	Lukas Kurnia Jonathan / 13517006 (K-03)");	
@@ -28,8 +26,6 @@ public class MainProgram
 				System.out.println("	Rika Dewi / 13517147 (K-03)");	
 				System.out.println("===================================================");
 				System.out.println();
-
-			
 				System.out.println("Silakan pilih menu yang diinginkan: ");
 				System.out.println("1. Sistem Persamaan Linear ");
 				System.out.println("2. Interpolasi Polinom ");
@@ -37,12 +33,11 @@ public class MainProgram
 				System.out.println();
 				
 
-				
-					do
+				do
 					{
 						Scanner in = new Scanner(System.in); 
 						System.out.print("Pilih menu: ");
-						menu = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
+						menu = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu pilihan
 						if((menu != 1) && (menu != 2) && (menu != 3))
 						{
 							System.out.println("Menu salah, silakan coba lagi !");
@@ -109,23 +104,21 @@ public class MainProgram
 							backutama=true;
 						}
 							
-						else if(metode== 1) //memilih masukkan input dari keyboard
+						else if(metode== 1) //memilih masukkan input dari keyboard user
 						{
 							MATRIKS M = new MATRIKS();
 							Scanner in = new Scanner(System.in);
 							System.out.print("Masukkan banyak persamaan / baris matriks: ");
-							m = in.nextInt();
+							m = in.nextInt(); // banyak persamaan
 							System.out.print("Masukkan banyak peubah / kolom matriks: ");
-							n = in.nextInt();
-							M.BacaInputUser(m,n);
+							n = in.nextInt(); // banyak peubah
+							M.BacaInputUser(m,n); //Membuat matriks sesuai input user
 
 							Gaussian  G = new Gaussian();
 							G.REF(M); // melakukan fungsi gauss
 							System.out.println("Matriks setelah dilakukan Gauss:");
-							M.CetakMATRIKS();
-							//G.backSub(M); // melakukan back substitution							
-							//G.printSol(G.solution); //print solusi ke layar
-							G.printSol(M);
+							M.CetakMATRIKS(); // Mencetak Matriks setelah dilakukan Gauss
+							G.printSol(M); // Mencetak hasil peubah ke layar
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
 							
@@ -146,23 +139,23 @@ public class MainProgram
 							{
 								Scanner filein = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein.nextLine(); 
+								filename = filein.nextLine(); // memasukkan nama file eksternal untuk di output
 
-								if(Gaussian.isSolvable(M))
+								if(Gaussian.isSolvable(M))// Jika matriks memiliki solusi
 								{
-									M.TulisHasil(filename,Gaussian.Solver(M));
+									M.TulisHasil(filename,Gaussian.Solver(M));// Menuliskan solusi matriks ke file
 								
 								}
-								else
+								else // Matriks tidak memiliki solusi
 								{
-									M.TulisNoSolution(filename);
+									M.TulisNoSolution(filename); // Menuliskan no solution ke file
 								}
 
-								backutama = true;
+								backutama = true; // kembali ke menu utama
 							}
 							else //simpan == 0
 							{
-								backutama=true;
+								backutama=true; // kembali ke menu utama
 							}
 						
 						}
@@ -172,20 +165,18 @@ public class MainProgram
 							MATRIKS M = new MATRIKS();
 							Scanner in = new Scanner(System.in);
 							System.out.print("Masukkan nama file eksternal (.txt): ");
-							filename = in.nextLine();
-							M.BacaFileEksternal(filename);
+							filename = in.nextLine(); // Memasukkan nama file eksternal data uji
+							M.BacaFileEksternal(filename); // membuka file data uji dan membentuk matriks
 							System.out.println("Matriks Anda sekarang: ");
-							M.CetakMATRIKS();
+							M.CetakMATRIKS(); // Mencetak matriks ke layar
 							System.out.println();
 
 
 							Gaussian  G = new Gaussian();
 							G.REF(M); // melakukan fungsi gauss
 							System.out.println("Matriks setelah dilakukan Gauss:");
-							M.CetakMATRIKS();
-							//G.backSub(M); // melakukan back substitution							
-							//G.printSol(G.solution); //print solusi ke layar
-							G.printSol(M);
+							M.CetakMATRIKS();// Mencetak matriks setelah fungsi gauss ke layar
+							G.printSol(M); // mencetak solusi peubah ke layar
 							System.out.println();
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
@@ -207,23 +198,23 @@ public class MainProgram
 							{
 								Scanner filein = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein.nextLine(); 
+								filename = filein.nextLine(); // memasukkan nama file yang menjadi data uji
 
-								if(Gaussian.isSolvable(M))
+								if(Gaussian.isSolvable(M)) // Jika matriks memiliki solusi
 								{
-									M.TulisHasil(filename,Gaussian.Solver(M));
+									M.TulisHasil(filename,Gaussian.Solver(M));// menulis solusi ke file
 								
 								}
-								else
+								else // matriks tidak memiliki solusi
 								{
-									M.TulisNoSolution(filename);
+									M.TulisNoSolution(filename); // menulis no solution ke layar
 								}
 
-								backutama = true;
+								backutama = true; //kembali ke menu utama
 							}
 							else //simpan == 0
 							{
-								backutama=true;
+								backutama=true; // kembali ke menu utama
 							}
 							
 						}
@@ -241,7 +232,7 @@ public class MainProgram
 
 						do
 						{
-							//Scanner in = new Scanner(System.in); 
+							
 							Scanner in = new Scanner(System.in); 
 							System.out.print("Pilih metode: ");
 							metode = in.nextInt(); //Memasukkan input integer 1 sampai 3 berupa menu
@@ -254,7 +245,7 @@ public class MainProgram
 
 						if(metode == 3) //command untuk back ke program utama
 						{
-							backutama=true;
+							backutama=true; // kembali ke menu utama
 						}
 							
 						else if(metode== 1)
@@ -262,18 +253,17 @@ public class MainProgram
 							MATRIKS M = new MATRIKS();
 							Scanner in = new Scanner(System.in);
 							System.out.print("Masukkan banyak persamaan / baris matriks: ");
-							m = in.nextInt();
+							m = in.nextInt(); // menerima input banyak persamaan
 							System.out.print("Masukkan banyak peubah / kolom matriks: ");
-							n = in.nextInt();
-							M.BacaInputUser(m,n);
+							n = in.nextInt();// menerima input berupa banyak peubah
+							M.BacaInputUser(m,n); // Membentuk matriks
 
 							Gaussian  G = new Gaussian();
 							G.REF(M); // melakukan gauss terlebih dahulu
 							G.RREF(M); // melakukan fungsi gauss jordan
 							System.out.println("Matriks setelah dilakukan REF:");
-							M.CetakMATRIKS();							
-							//G.printSol(G.JordanSolution); //print solusi ke layar
-							G.printSol(M);
+							M.CetakMATRIKS(); // menuliskan isi matriks setelah gauss jordan ke layar							
+							G.printSol(M); // menuliskan hasil solusi ke layar
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
 							
@@ -296,21 +286,21 @@ public class MainProgram
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
 								filename = filein.nextLine(); 
 
-								if(Gaussian.isSolvable(M))
+								if(Gaussian.isSolvable(M))// Jika matriks bisa diselesaikan
 								{
-									M.TulisHasil(filename,Gaussian.Solver(M));
+									M.TulisHasil(filename,Gaussian.Solver(M)); // menuliskan solusi ke file eksternal
 								
 								}
-								else
+								else // matriks no solution
 								{
-									M.TulisNoSolution(filename);
+									M.TulisNoSolution(filename); // menuliksan no solution ke file
 								}
 
-								backutama = true;
+								backutama = true; // kembali ke menu utama
 							}
 							else //simpan == 0
 							{
-								backutama=true;
+								backutama=true; // kembali ke menu utama
 							}
 						
 						}
@@ -320,10 +310,10 @@ public class MainProgram
 							MATRIKS M = new MATRIKS();
 							Scanner in = new Scanner(System.in);
 							System.out.print("Masukkan nama file eksternal (.txt): ");
-							filename = in.nextLine();
-							M.BacaFileEksternal(filename);
+							filename = in.nextLine();// memasukkan nama file eksternal data uji
+							M.BacaFileEksternal(filename); // membuat matriks sesuai file data uji
 							System.out.println("Matriks Anda sekarang: ");
-							M.CetakMATRIKS();
+							M.CetakMATRIKS(); // mencetak matriks ke layar
 							System.out.println();
 
 
@@ -331,9 +321,8 @@ public class MainProgram
 							G.REF(M); // melakukan Gauss terlebih dahulu
 							G.RREF(M); // melakukan fungsi gauss
 							System.out.println("Matriks setelah dilakukan Gauss Jordan:");
-							M.CetakMATRIKS();
-							//G.printSol(G.JordanSolution); //print solusi ke layar
-							G.printSol(M);
+							M.CetakMATRIKS();//Mencetak matriks ke layar setelah dilakukan gauss jordan
+							G.printSol(M); // menuliskan solusi matriks ke layar
 							System.out.println();
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
@@ -351,27 +340,27 @@ public class MainProgram
 							}
 							while((simpan != 1) && (simpan != 0));
 
-							if(simpan==1)
+							if(simpan==1) // menyimpan file
 							{
 								Scanner filein = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein.nextLine(); 
+								filename = filein.nextLine(); // menuliskan nama file eksternal untuk disimpan
 
-								if(Gaussian.isSolvable(M))
+								if(Gaussian.isSolvable(M)) // jika matriks memiliki solusi
 								{
-									M.TulisHasil(filename,Gaussian.Solver(M));
+									M.TulisHasil(filename,Gaussian.Solver(M)); // menuliskan solusi ke file eksternal
 								
 								}
-								else
+								else // matriks tidak memiliki solusi
 								{
-									M.TulisNoSolution(filename);
+									M.TulisNoSolution(filename); //menuliskan no solution ke file
 								}
 
-								backutama = true;
+								backutama = true; // kembali ke menu utama
 							}
 							else //simpan == 0
 							{
-								backutama=true;
+								backutama=true;// kembali ke menu utama
 							}
 							
 						}
@@ -403,7 +392,7 @@ public class MainProgram
 
 					if(metode == 3) //command untuk back ke program utama
 					{
-						backutama=true;
+						backutama=true; // kembali ke menu utama
 					}
 					else if(metode== 1) //Memasukkan input dari keyboard
 					{
@@ -413,15 +402,15 @@ public class MainProgram
 
 						Scanner in = new Scanner (System.in);
 						System.out.print("Masukkan derajat polinom interpolasi (n): ");
-						nderajat = in.nextInt();
+						nderajat = in.nextInt(); // input berupa derajat polinom
 
-						M.BacaInputUser(nderajat+1,2);
-						M= I.MatriksInterpolasi (M);
-						G.REF(M);
+						M.BacaInputUser(nderajat+1,2); // membaca matriks dengan baris (nderajat+1) dan kolom 2
+						M= I.MatriksInterpolasi (M); //Membuat matriks kuadratik untuk interpolasi
+						G.REF(M); // matriks kuadratik dilakukan gauss
 
 						
 						System.out.println("Hasil interpolasi: ");
-						I.printPol(Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
+						I.printPol(Gaussian.ArrStringtoDouble(Gaussian.Solver(M))); // Menuliskan hasil persamaan polinom ke layar
 
 						
 						double [] x = new double [100];
@@ -429,16 +418,16 @@ public class MainProgram
 						int i=0;
 						Scanner doublein = new Scanner(System.in);
 						System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
-						x[i]  = doublein.nextDouble();
+						x[i]  = doublein.nextDouble(); // menuliskan nilai x yang ditaksir
 						while (x[i]!=-999) {
 							
-							// y[i] = I.solusiInterpolasi ( x[i], G.solution);
-							y[i] = I.solusiInterpolasi ( x[i], Gaussian.Solver(M));
+							
+							y[i] = I.solusiInterpolasi ( x[i], Gaussian.Solver(M)); // menuliskan taksiran nilai fungsi P(x)
 							System.out.println("Taksiran nilai fungsi: ");
 							System.out.printf("p%d(%.3f) = %.3f\n\n",nderajat, x[i], y[i]);
 							System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
 							i++;
-							x[i]  = doublein.nextDouble();
+							x[i]  = doublein.nextDouble(); // menuiskan nilai x yang ditaksir
 
 						} 
 
@@ -461,21 +450,18 @@ public class MainProgram
 							{
 								Scanner filein3 = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein3.nextLine(); 
+								filename = filein3.nextLine(); // menuliskan nama file untuk disimpan
 
-								I.TulisPol (filename, Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
+								I.TulisPol (filename, Gaussian.ArrStringtoDouble(Gaussian.Solver(M))); // menuliskan P(x) ke file eksternal
 								for (int j = 0; j< i; j++){
-									I.TulisPx (filename, nderajat, x[j], y[j]);
+									I.TulisPx (filename, nderajat, x[j], y[j]); // menuliskan taksiran P(x) untuk x yang ingin ditaksir ke file
 								}
 
-
-								// filename = filein.nextLine(); 
-								// I.TulisInter(filename,Gaussian.solution,x,y);
-								backutama = true;
+								backutama = true; // kembali ke menu utama
 							}
 							else //simpan == 0
 							{
-								backutama=true;
+								backutama=true; // kembali ke menu utama
 							}
 
 
@@ -490,18 +476,18 @@ public class MainProgram
 
 						Scanner in = new Scanner(System.in);
 						System.out.print("Masukkan nama file eksternal (.txt): ");
-						filename = in.nextLine();
-						M.BacaFileEksternal(filename);
+						filename = in.nextLine(); // menuliskan input file data uji yang
+						M.BacaFileEksternal(filename); // membuat matriks dari file eksternal
 						System.out.println("Matriks interpolasi Anda sekarang: ");
-						M.CetakMATRIKS();
+						M.CetakMATRIKS(); // menuliskan matriks ke layar
 						System.out.println();
 
-						M= I.MatriksInterpolasi (M);
-						G.REF(M);
+						M= I.MatriksInterpolasi (M); // Membuat matriks kuadratik untuk interpolasi polinom
+						G.REF(M); // matriks kuadratik dieliminasi gauss
 
 						
 						System.out.println("Hasil interpolasi: ");
-						I.printPol(Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
+						I.printPol(Gaussian.ArrStringtoDouble(Gaussian.Solver(M))); //menuliskan hasil polinom P(x)
 
 						
 						double [] x = new double [100];
@@ -509,16 +495,16 @@ public class MainProgram
 						int i=0;
 						Scanner doublein = new Scanner(System.in);
 						System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
-						x[i]  = doublein.nextDouble();
+						x[i]  = doublein.nextDouble(); // input hara x yang ingin ditaksir
 						while (x[i]!=-999) {
 							
-							// y[i] = I.solusiInterpolasi ( x[i], G.solution);
-							y[i] = I.solusiInterpolasi ( x[i], Gaussian.Solver(M));
+							
+							y[i] = I.solusiInterpolasi ( x[i], Gaussian.Solver(M)); // menuliskan solusi dari x yang ingin ditaksir
 							System.out.println("Taksiran nilai fungsi: ");
 							System.out.printf("p%d(%.3f) = %.3f\n\n",(M.NKolEff-2), x[i], y[i]);
 							System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
 							i++;
-							x[i]  = doublein.nextDouble();
+							x[i]  = doublein.nextDouble(); // input x yang ingin ditaksir
 
 						} 
 
@@ -541,21 +527,18 @@ public class MainProgram
 							{
 								Scanner filein3 = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein3.nextLine(); 
+								filename = filein3.nextLine(); //menuliskan nama file penyimpanan
 
-								I.TulisPol (filename, Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
+								I.TulisPol (filename, Gaussian.ArrStringtoDouble(Gaussian.Solver(M))); //menuliskan persamaan polinom P(x) ke file eksternal
 								for (int j = 0; j< i; j++){
-									I.TulisPx (filename, (M.NKolEff-2 ), x[j], y[j]);
+									I.TulisPx (filename, (M.NKolEff-2 ), x[j], y[j]); //menuliskan taksira hasil interpolasi ke file eksternal
 								}
 
-
-								// filename = filein.nextLine(); 
-								// I.TulisInter(filename,Gaussian.solution,x,y);
-								backutama = true;
+								backutama = true; //kembali ke menu utama
 							}
 							else //simpan == 0
 							{
-								backutama=true;
+								backutama=true; // kembali ke menu utama
 							}
 
 
