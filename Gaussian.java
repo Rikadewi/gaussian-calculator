@@ -26,7 +26,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 		for(i = 0; i<M.NBrsEff; i++) {
 
 
-						//STEP 3 : MEMBUAT LEADING ELEMENT MENJADI 1
+						//STEP 1 : MEMBUAT LEADING ELEMENT MENJADI 1
 
 					    boolean LeadingE;
 
@@ -46,7 +46,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 
 
 
-			//STEP 1 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT MENJADI 0
+			//STEP 2 : MEMBUAT SEMUA ELEMENT DIBAWAH LEADING ELEMENT MENJADI 0
 			for(int row = i+1;row<M.NBrsEff;row++){
 				if(M.Tab[i][IndexLeading(i,M)]!=0) {
 					ratio = M.Tab[row][IndexLeading(i,M)]/M.Tab[i][IndexLeading(i,M)];		//ratio untuk pengali
@@ -58,7 +58,7 @@ public class Gaussian { //ielas berisi method Gauss Elimination dan Gauss Jordan
 
 
 
-		    //STEP 2 : MENGURUTKAN 0 SEHINGGA MEMBENTUK MATRIKS SEGITIGA BAWAH/ESCHELON
+		    //STEP 3 : MENGURUTKAN 0 SEHINGGA MEMBENTUK MATRIKS SEGITIGA BAWAH/ESCHELON
 		    for ( k = 0; k < M.NBrsEff-1; k++) {
 		      //Mencari jumlah nol di baris ke-i
 		      int Nzero;
