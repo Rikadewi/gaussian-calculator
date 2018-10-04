@@ -122,8 +122,9 @@ public class MainProgram
 							G.REF(M); // melakukan fungsi gauss
 							System.out.println("Matriks setelah dilakukan Gauss:");
 							M.CetakMATRIKS();
-							G.backSub(M); // melakukan back substitution							
-							G.printSol(G.solution); //print solusi ke layar
+							//G.backSub(M); // melakukan back substitution							
+							//G.printSol(G.solution); //print solusi ke layar
+							G.printSol(M);
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
 							
@@ -146,6 +147,7 @@ public class MainProgram
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
 								filename = filein.nextLine(); 
 								M.TulisSPL(filename,Gaussian.solution);
+
 								backutama = true;
 							}
 							else //simpan == 0
@@ -171,8 +173,9 @@ public class MainProgram
 							G.REF(M); // melakukan fungsi gauss
 							System.out.println("Matriks setelah dilakukan Gauss:");
 							M.CetakMATRIKS();
-							G.backSub(M); // melakukan back substitution							
-							G.printSol(G.solution); //print solusi ke layar
+							//G.backSub(M); // melakukan back substitution							
+							//G.printSol(G.solution); //print solusi ke layar
+							G.printSol(M);
 							System.out.println();
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
@@ -207,7 +210,7 @@ public class MainProgram
 						
 					}
 					
-					else if(metode== 2) // Memilih Eliminasi REF Jordan
+					else if(metode== 2) // Memilih Eliminasi Gauss Jordan
 					{
 						System.out.println("Anda telah memilih Eliminasi Gauss Jordan, silakan pilih metode yang diinginkan: ");
 						System.out.println("1. Masukkan input dari keyboard ");
@@ -245,10 +248,12 @@ public class MainProgram
 							M.BacaInputUser(m,n);
 
 							Gaussian  G = new Gaussian();
-							G.RREF(M); // melakukan fungsi gauss
+							G.REF(M); // melakukan gauss terlebih dahulu
+							G.RREF(M); // melakukan fungsi gauss jordan
 							System.out.println("Matriks setelah dilakukan REF:");
 							M.CetakMATRIKS();							
-							G.printSol(G.JordanSolution); //print solusi ke layar
+							//G.printSol(G.JordanSolution); //print solusi ke layar
+							G.printSol(M);
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
 							
@@ -293,10 +298,12 @@ public class MainProgram
 
 
 							Gaussian  G = new Gaussian();
+							G.REF(M); // melakukan Gauss terlebih dahulu
 							G.RREF(M); // melakukan fungsi gauss
 							System.out.println("Matriks setelah dilakukan Gauss Jordan:");
 							M.CetakMATRIKS();
-							G.printSol(G.JordanSolution); //print solusi ke layar
+							//G.printSol(G.JordanSolution); //print solusi ke layar
+							G.printSol(M);
 							System.out.println();
 
 							System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
@@ -382,7 +389,7 @@ public class MainProgram
 						x[i]  = doublein.nextDouble();
 						while (x[i]!=-999) {
 							
-							y[i] = I.solusiInterpolasi ( x[i], G.solution);
+							//y[i] = I.solusiInterpolasi ( x[i], G.solution);
 							System.out.println("Taksiran nilai fungsi: ");
 							System.out.printf("p%d(%.3f) = %.3f\n\n",nderajat, x[i], y[i]);
 							System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
@@ -462,7 +469,7 @@ public class MainProgram
 						x[i]  = doublein.nextDouble();
 						while (x[i]!=-999) {
 							
-							y[i] = I.solusiInterpolasi ( x[i], G.solution);
+							//y[i] = I.solusiInterpolasi ( x[i], G.solution);
 							
 							System.out.println("Taksiran nilai fungsi: ");
 							System.out.printf("p%d(%.3f) = %.3f\n\n",(G.solution.length-1), x[i], y[i]);
