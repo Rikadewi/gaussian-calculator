@@ -5,8 +5,8 @@ public class MainProgram
 	public static void main(String[] args) 
 	{
 	/*Atribut*/
-	boolean exit, backutama;
-	int menu,metode,simpan;
+	boolean exit, backutama; //digunakan untuk mengulang program
+	int menu,metode,simpan; // input interaksi antara user dengan program
 	int n,m; // n = banyak peubah (banyak kolom), m= banyak persamaan (baris)
 	String filename; // variable untuk menulis namafile dalam string.
 	int nderajat; // derajat polinom
@@ -20,6 +20,7 @@ public class MainProgram
 			while(!backutama)
 			{
 				System.out.println("===================================================");
+			
 				System.out.println("Tugas Besar Aljabar Geometri SPL dan Aplikasinya");	
 				System.out.println("Credit : Kelompok 'Ga Luka'");	
 				System.out.println("	Lukas Kurnia Jonathan / 13517006 (K-03)");	
@@ -146,7 +147,16 @@ public class MainProgram
 								Scanner filein = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
 								filename = filein.nextLine(); 
-								M.TulisSPL(filename,Gaussian.solution);
+
+								if(Gaussian.isSolvable(M))
+								{
+									M.TulisHasil(filename,Gaussian.Solver(M));
+								
+								}
+								else
+								{
+									M.TulisNoSolution(filename);
+								}
 
 								backutama = true;
 							}
@@ -198,7 +208,17 @@ public class MainProgram
 								Scanner filein = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
 								filename = filein.nextLine(); 
-								M.TulisSPL(filename,Gaussian.solution);
+
+								if(Gaussian.isSolvable(M))
+								{
+									M.TulisHasil(filename,Gaussian.Solver(M));
+								
+								}
+								else
+								{
+									M.TulisNoSolution(filename);
+								}
+
 								backutama = true;
 							}
 							else //simpan == 0
@@ -272,15 +292,25 @@ public class MainProgram
 
 							if(simpan==1)
 							{
-								Scanner filein2 = new Scanner (System.in);
+								Scanner filein = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein2.nextLine(); 
-								M.TulisSPL(filename,Gaussian.solution);
-								backutama = true; // kembali ke menu utama
+								filename = filein.nextLine(); 
+
+								if(Gaussian.isSolvable(M))
+								{
+									M.TulisHasil(filename,Gaussian.Solver(M));
+								
+								}
+								else
+								{
+									M.TulisNoSolution(filename);
+								}
+
+								backutama = true;
 							}
 							else //simpan == 0
 							{
-								backutama=true;  //kembali ke menu utama
+								backutama=true;
 							}
 						
 						}
@@ -326,7 +356,17 @@ public class MainProgram
 								Scanner filein = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
 								filename = filein.nextLine(); 
-								M.TulisSPL(filename,Gaussian.solution);
+
+								if(Gaussian.isSolvable(M))
+								{
+									M.TulisHasil(filename,Gaussian.Solver(M));
+								
+								}
+								else
+								{
+									M.TulisNoSolution(filename);
+								}
+
 								backutama = true;
 							}
 							else //simpan == 0
@@ -376,11 +416,14 @@ public class MainProgram
 						nderajat = in.nextInt();
 
 						M.BacaInputUser(nderajat+1,2);
-						I.MatriksInterpolasi (M);
-						System.out.println("Hasil interpolasi: ");
-						I.printPol(G.solution);
+						M= I.MatriksInterpolasi (M);
+						G.REF(M);
 
-						//System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
+						
+						System.out.println("Hasil interpolasi: ");
+						I.printPol(Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
+
+						
 						double [] x = new double [100];
 						double [] y = new double [100];
 						int i=0;
@@ -389,7 +432,8 @@ public class MainProgram
 						x[i]  = doublein.nextDouble();
 						while (x[i]!=-999) {
 							
-							//y[i] = I.solusiInterpolasi ( x[i], G.solution);
+							// y[i] = I.solusiInterpolasi ( x[i], G.solution);
+							y[i] = I.solusiInterpolasi ( x[i], Gaussian.Solver(M));
 							System.out.println("Taksiran nilai fungsi: ");
 							System.out.printf("p%d(%.3f) = %.3f\n\n",nderajat, x[i], y[i]);
 							System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
@@ -398,11 +442,6 @@ public class MainProgram
 
 						} 
 
-						/*x= in.nextDouble();
-						y= I.solusiInterpolasi(x, G.solution);
-						System.out.println("Taksiran nilai fungsi: ");
-						System.out.printf("p(%.3f) = %.3f\n\n", x, y);
-*/
 						System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
 							
 							do
@@ -420,13 +459,13 @@ public class MainProgram
 
 							if(simpan==1)
 							{
-								Scanner filein = new Scanner (System.in);
+								Scanner filein3 = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein.nextLine(); 
+								filename = filein3.nextLine(); 
 
-								I.TulisPol (filename, G.solution);
+								I.TulisPol (filename, Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
 								for (int j = 0; j< i; j++){
-									I.TulisPx (filename, G.solution.length-1, x[j], y[j]);
+									I.TulisPx (filename, nderajat, x[j], y[j]);
 								}
 
 
@@ -457,32 +496,31 @@ public class MainProgram
 						M.CetakMATRIKS();
 						System.out.println();
 
-						I.MatriksInterpolasi (M);
-						System.out.println("Hasil interpolasi: ");
-						I.printPol(G.solution);
+						M= I.MatriksInterpolasi (M);
+						G.REF(M);
 
+						
+						System.out.println("Hasil interpolasi: ");
+						I.printPol(Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
+
+						
 						double [] x = new double [100];
 						double [] y = new double [100];
 						int i=0;
-						System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
 						Scanner doublein = new Scanner(System.in);
+						System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
 						x[i]  = doublein.nextDouble();
 						while (x[i]!=-999) {
 							
-							//y[i] = I.solusiInterpolasi ( x[i], G.solution);
-							
+							// y[i] = I.solusiInterpolasi ( x[i], G.solution);
+							y[i] = I.solusiInterpolasi ( x[i], Gaussian.Solver(M));
 							System.out.println("Taksiran nilai fungsi: ");
-							System.out.printf("p%d(%.3f) = %.3f\n\n",(G.solution.length-1), x[i], y[i]);
+							System.out.printf("p%d(%.3f) = %.3f\n\n",(M.NKolEff-2), x[i], y[i]);
 							System.out.print("Masukkan harga x (Ketik -999 untuk mengakhiri) : ");
 							i++;
 							x[i]  = doublein.nextDouble();
-						} 
 
-						/*System.out.print("Masukkan harga x: ");
-						x= in.nextDouble();
-						y= I.solusiInterpolasi(x, G.solution);
-						System.out.println("Taksiran nilai fungsi: ");
-						System.out.printf("p(%.3f) = %.3f\n\n", x, y);*/
+						} 
 
 						System.out.println("Ketik '1' untuk menyimpan hasil dalam file eksternal, '0' jika tidak");
 							
@@ -501,17 +539,18 @@ public class MainProgram
 
 							if(simpan==1)
 							{
-								Scanner filein = new Scanner (System.in);
+								Scanner filein3 = new Scanner (System.in);
 								System.out.print("Masukkan nama file penyimpanan (.txt): ");
-								filename = filein.nextLine(); 
+								filename = filein3.nextLine(); 
 
-
-								I.TulisPol (filename, G.solution);
+								I.TulisPol (filename, Gaussian.ArrStringtoDouble(Gaussian.Solver(M)));
 								for (int j = 0; j< i; j++){
-									I.TulisPx (filename, G.solution.length-1, x[j], y[j]);
+									I.TulisPx (filename, (M.NKolEff-2 ), x[j], y[j]);
 								}
 
-								//I.TulisInter(filename,Gaussian.solution,x,y);
+
+								// filename = filein.nextLine(); 
+								// I.TulisInter(filename,Gaussian.solution,x,y);
 								backutama = true;
 							}
 							else //simpan == 0

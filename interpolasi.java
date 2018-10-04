@@ -3,7 +3,7 @@ import java.util.*;
 
 public class interpolasi {
 
-	public static void MatriksInterpolasi(MATRIKS M) {
+	public static MATRIKS  MatriksInterpolasi(MATRIKS M) {
 		//menerima input matriks n baris 2 kolom
 
 		//membuat matriks kuadratik
@@ -20,8 +20,10 @@ public class interpolasi {
 			M1.Tab[i][j] = M.Tab[i][1];
 		}
 
+		return M1;
 		//Melakukan Gauss
-		Gaussian.REF(M1);
+
+		// Gaussian.REF(M1);
 		
 	}
 	

@@ -110,7 +110,7 @@ public class MATRIKS {
  
     }
 	
-	public void TulisSPL (String filename, double solution [])  {
+	/*public void TulisSPL (String filename, double solution [])  {
 		//menulis MATRIKS ke file eksternal
         try {
             FileWriter writer = new FileWriter(filename);
@@ -127,8 +127,41 @@ public class MATRIKS {
             e.printStackTrace();
         }
  
-    }
+    }*/
 	
+	public void TulisNoSolution(String filename){
+		// menulis no solution ke file eksternal
+		try{
+			FileWriter writer = new FileWriter(filename);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            bufferedWriter.write("No Solution");
+            bufferedWriter.newLine();
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+		}
+	}
+
+	public void TulisHasil (String filename, String solution [])  {
+		//menulis MATRIKS ke file eksternal
+        try {
+            FileWriter writer = new FileWriter(filename);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+ 			
+ 			for(int i = 0;i<solution.length;i++)
+			{
+				bufferedWriter.write("x"+ (i+1) +" = "+ solution[i]);
+				bufferedWriter.newLine();
+			}	
+	        
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
 	
 	
 }

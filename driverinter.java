@@ -42,7 +42,7 @@ public class driverinter {
 		x[i]  = in.nextDouble();
 		while (x[i]!=-999) {
 			
-			y[i] = interpolasi.solusiInterpolasi ( x[i], Gaussian.solution);
+			//y[i] = interpolasi.solusiInterpolasi ( x[i], Gaussian.solution);
 			i++;
 			x[i]  = in.nextDouble();
 		} 
